@@ -1,25 +1,47 @@
 const gameBoard = (function() {
-    let board = {array:[]};
-    //loop to add 9 div blocks to array
-    //calls createBoard
+    let board = {array:[1,2,3,4,5,6,7,8,9]};
     return {board};
 })();
 
 
 const Player = (name) => {
     const playerName = () => name;
+    const playerScore = 0;
+    const playerSelection = [];
 
-    return {playerName}
+    return {playerName, playerScore, playerSelection}
 };
 
 //GAME MODULE
-//gamecounter object
-//store possible win combinations in arrays in an object
-//checkWin checks for win / draw
-//resetGame
+const gameCounter = (() => {
+    let winCombs = [[1,2,3],
+                    [1,4,7],
+                    [1,5,9],
+                    [2,5,8],
+                    [3,6,9],
+                    [3,5,7],
+                    [4,5,6],
+                    [7,8,9]
+];
+
+    let checkWin = (playerSelection, winCombs) => {
+        //check if playerSelection is in winCombs!
+        //check for draw!
+    };
+
+    let resetGame = () => {
+
+    };
+    return {checkWin};
+})();
 
 
-//displayController module
+//DISPLAY MODULE
 //newBoard creates a grid of divs from board array
-//checkBoard checks a block on the board
 //updateBoard updates board on display
+//checkBlock checks a div on click
+//isChecked checks to see if block is checked  *?
+
+
+
+
