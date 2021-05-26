@@ -1,15 +1,16 @@
 const gameBoard = (function() {
-    let board = {array:[1,2,3,4,5,6,7,8,9]};
+    const board = {array:[1,2,3,4,5,6,7,8,9]};
     return {board};
 })();
 
 
-const Player = (name) => {
+const Player = (name, number) => {
     const playerName = () => name;
-    const playerScore = 0;
-    const playerSelection = [];
+    const playerNumber = () => number;
+    const playerScore = () => 0;
+    const playerSelection = () => [];
 
-    return {playerName, playerScore, playerSelection}
+    return {playerName, playerNumber, playerScore, playerSelection}
 };
 
 //GAME MODULE
@@ -37,10 +38,56 @@ const gameCounter = (() => {
 
 
 //DISPLAY MODULE
-//newBoard creates a grid of divs from board array
-//updateBoard updates board on display
-//checkBlock checks a div on click
-//isChecked checks to see if block is checked  *?
+const displayBoard = (() => {
+    let boardGrid = document.createElement('div');
+    boardGrid.setAttribute('class', 'board-grid');
+    let isPlayerOneTurn = true;
+    let boxMarker = '';
+
+    let blocks = boardGrid.getElementsByClassName('board-blocks');
+
+    for (let i = 0; i < blocks.length; i++) {
+        blocks[i].addEventListener('click', checkBlock());
+    };
+
+    let newBoard = () => {
+       for (let c in board) {
+           let newDiv = document.createElement('div');
+           newDiv.className = 'board-blocks';
+           boardGrid.appendChild(newDiv);
+       };
+    };
+
+    let newGame = () => {
+        removeBoard();
+        newBoard();
+    };
+
+    let removeBoard = () => {
+        for (let i = 0; i < blocks.length; i++) {
+            blocks.parentNode.firstChild.removeChild();
+        }
+    };
+
+    let checkBlock = (e) => {
+        if (isPlayerOneTurn) {
+            boxMarker = 'X';
+        } else {
+            boxMarker = 'O';
+        };
+        if (e.innerHTML === '') {
+        e.innerHTML = boxMarker;
+        };
+        cacheSelections();
+        checkWin();
+    };
+
+    let cacheSelections = () => {
+        
+    };
+})();
+//need to figure out how to keep track of each player selection and check against win combs
+//loop through each block on click 
 
 
 
