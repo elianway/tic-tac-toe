@@ -4,15 +4,14 @@ const gameBoard = (function() {
 })();
 
 
-const Player = (name) => {
-    const playerName = () => name;
-    const playerScore = () => 0;
+const Player = () => {
+    const playerName = () => "";
     const playerSelection = () => [];
+    const numberOfWins = () => 0;
 
-    return {playerName, playerScore, playerSelection}
+    return {playerName, playerSelection, numberOfWins}
 };
 
-//GAME MODULE
 const gameCounter = (() => {
     let winCombs = [[1,2,3],
                     [1,4,7],
@@ -24,25 +23,54 @@ const gameCounter = (() => {
                     [7,8,9]
 ];
 
-    let checkWin = (playerSelection, winCombs) => {
-        //check if playerSelection is in winCombs!
-        //check for draw! -- if certain number boxes left
-        //and no win?..
+    let checkWin = (player) => {
+        for (let c in winCombs) {
+            if (player.playerSelection.includes(winCombs[c])) {
+                alert(player.playerName + " wins!");
+                player.numberOfWins++;
+                resetSelection();
+                newGame();
+            } else if (allBoxesChecked) {
+                alert("Draw!");
+                resetSelection();
+                newGame();
+            }
+        }
+        if (player.numberOfWins === 3) {
+            gameOver(player.playerName);
+        }
     };
 
-    let resetGame = () => {
+    let gameOver = (name) => {
+        alert(name + " has won! Click to play again!");
+        resetScore();
+        newGame();
+    }
 
+    let resetSelection = () => {
+        player1.playerSelection = [];
+        player2.playerSelection = [];
+    }
+
+    let resetScore = () => {
+        player1.numberOfWins = 0;
+        player2.numberOfWins = 0;
     };
+
+    let makePlayers = () => {
+        let playerName1 = prompt("Enter Player1 name: ");
+        player1.playerName = playerName1;
+        let playerName2 = prompt("Enter Player2 name: ");
+        player2.playerName = playerName2;
+    }
+
     return {checkWin};
 })();
 
-
-//DISPLAY MODULE
 const displayBoard = (() => {
     let boardGrid = document.createElement('div');
     boardGrid.setAttribute('class', 'board-grid');
     let isPlayerOneTurn = true;
-    let boxMarker = '';
 
     let blocks = boardGrid.getElementsByClassName('board-blocks');
 
@@ -70,29 +98,39 @@ const displayBoard = (() => {
     };
 
     let checkBlock = (e) => {
-        if (isPlayerOneTurn) {
-            boxMarker = 'X';
-        } else {
-            boxMarker = 'O';
+        if (e.innerHTML === '' && isPlayerOneTurn) {
+                e.innerHTML = 'X';
+                cacheSelections();
+                checkWin(player1);
+            } else if (e.innerHTML = '') {
+                e.innerHTML = 'O';
+                cacheSelections();
+                checkWin(player2);
         };
-        if (e.innerHTML === '') {
-        e.innerHTML = boxMarker;
-        };
-        cacheSelections();
-        checkWin();
+    };
+
+    let allBoxesChecked = () => {
+        result = true;
+        for (c in blocks) {
+            if (blocks[c].innerHTML === "") {
+                result = false;
+            }
+        }
+        return result;
     };
 
     let cacheSelections = () => {
         for (let c in blocks) {
-            if (blocks[i].innerHTML === 'X') {
-                player1.playerSelection.push(i);
-            } else if (blocks[i].innerHTML === 'O') {
-                player2.playerSelection.push(i);
+            if (blocks[c].innerHTML === 'X') {
+                player1.playerSelection.push(c);
+            } else if (blocks[c].innerHTML === 'O') {
+                player2.playerSelection.push(c);
             };
         };
     };
 })();
 
-
+//initialize on window load makePlayers
+//and finish scoping modules for compatibility
 
 
