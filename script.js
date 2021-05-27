@@ -4,13 +4,12 @@ const gameBoard = (function() {
 })();
 
 
-const Player = (name, number) => {
+const Player = (name) => {
     const playerName = () => name;
-    const playerNumber = () => number;
     const playerScore = () => 0;
     const playerSelection = () => [];
 
-    return {playerName, playerNumber, playerScore, playerSelection}
+    return {playerName, playerScore, playerSelection}
 };
 
 //GAME MODULE
@@ -27,7 +26,8 @@ const gameCounter = (() => {
 
     let checkWin = (playerSelection, winCombs) => {
         //check if playerSelection is in winCombs!
-        //check for draw!
+        //check for draw! -- if certain number boxes left
+        //and no win?..
     };
 
     let resetGame = () => {
@@ -83,11 +83,15 @@ const displayBoard = (() => {
     };
 
     let cacheSelections = () => {
-        
+        for (let c in blocks) {
+            if (blocks[i].innerHTML === 'X') {
+                player1.playerSelection.push(i);
+            } else if (blocks[i].innerHTML === 'O') {
+                player2.playerSelection.push(i);
+            };
+        };
     };
 })();
-//need to figure out how to keep track of each player selection and check against win combs
-//loop through each block on click 
 
 
 
