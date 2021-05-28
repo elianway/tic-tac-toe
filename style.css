@@ -1,0 +1,27 @@
+h1 {
+    text-align: center;
+}
+
+#header {
+    text-align: center;
+}
+
+.board-grid {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-gap: none;
+   border: 5px solid black;
+   height: 600px;
+   width: 600px;
+   margin: 0 auto;
+   padding: 0px;
+}
+
+.board-blocks {
+    border: 1px solid black;
+    margin: 0px;
+    padding: 0px;
+    font-size: 40px;
+    color: black;
+    box-sizing: content-box;
+}
